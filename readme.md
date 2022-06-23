@@ -8,6 +8,6 @@
 
 可能会遇到的滑块验证，可以参考这个：https://www.bilibili.com/video/av213951111
 
-
-
 注意：以上操作全部完成后，可能还需要在当前设备上登录QQ。
+
+登录成功后执行，`python3 robot.py`
