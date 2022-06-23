@@ -1,0 +1,12 @@
+adapters: 
+  - http
+debug: false
+enableVerify: true
+verifyKey: INITKEYXegd2lRo
+singleMode: false
+cacheSize: 4096
+adapterSettings: 
+  http:
+    host: localhost
+    port: 8088
+    cors: [*]

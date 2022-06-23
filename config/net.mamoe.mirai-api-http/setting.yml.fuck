@@ -1,0 +1,9 @@
+# file: mcl-1.0.3/config/net.mamoe.mirai.api.http/setting.yml
+authKey: aaaaaaaa # 你可以自己设定, 这里作为示范
+
+# 可选，缓存大小，默认4096.缓存过小会导致引用回复与撤回消息失败
+cacheSize: 4096
+
+enableWebsocket: true # 是否启用 websocket 方式, 若使用 websocket 方式交互会得到更好的性能
+host: '127.0.0.1' # httpapi 服务监听的地址, 错误的设置会造成 Graia Application 无法与其交互
+port: 8080 # httpapi 服务监听的端口, 错误的设置会造成 Graia Application 无法与其交互
