@@ -1,28 +1,34 @@
-from graia.broadcast import Broadcast
-from graia.application import GraiaMiraiApplication, Session
-from graia.application.message.chain import MessageChain
-import asyncio
+from mirai import Mirai,WebSocketAdapter,FriendMessage,Plain,GroupMessage
+from mirai import Voice,MessageChain
+from pathlib import Path
 
-from graia.application.message.elements.internal import Plain
-from graia.application.friend import Friend
-
-loop = asyncio.get_event_loop()
-
-bcc = Broadcast(loop=loop)
-app = GraiaMiraiApplication(
-    broadcast=bcc,
-    connect_info=Session(
-        host="http://localhost:8080", # 填入 httpapi 服务运行的地址
-        authKey="aaaaaaaa", # 填入 authKey
-        account=2155654750, # 你的机器人的 qq 号
-        websocket=True # Graia 已经可以根据所配置的消息接收的方式来保证消息接收部分的正常运作.
+if __name__ == "__main__":
+    bot = Mirai(
+        qq=2155654750,
+        adapter=WebSocketAdapter(
+            verify_key="INITKEYXegd2lRo",host="127.0.0.1",port=8089
+        )
     )
-)
 
-@bcc.receiver("FriendMessage")
-async def friend_message_listener(app: GraiaMiraiApplication, friend: Friend):
-    await app.sendFriendMessage(friend, MessageChain.create([
-        Plain("Hello, World!")
-    ]))
+    @bot.on(FriendMessage)
+    async def on_friend_message(event: FriendMessage):
+        # voice = event.message_chain[Voice][0] # 一条消息只会包含一个语音
+        # await voice.download(filename='./temps/1.silk')
+        if str(event.message_chain) == '你好':
+        
+            await bot.send_friend_message(event.sender.id, [Plain('欢迎使用 YiriMirai。')])
+            return bot.send(event, 'Hello, World!')
 
-app.launch_blocking()
+    @bot.on(GroupMessage)
+    async def on_group_message(event: GroupMessage):
+        # voice = event.message_chain[Voice][0] # 一条消息只会包含一个语音
+        # await voice.download(filename='./temps/1.silk')
+        if str(event.message_chain) == '黑黑':
+            print(event)
+            # await bot.send_friend_message(event.sender.id, [Plain('欢迎使用 YiriMirai。')])
+            message_chain4 = MessageChain([
+                await Voice.from_local('./temps/test_audio.silk')
+            ])
+            return bot.send(event,message_chain4)
+
+    bot.run()
